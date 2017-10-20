@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+
+android {
+    def globalConfig = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfig["compileSdkVersion"]
+    buildToolsVersion globalConfig["buildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfig["minSdkVersion"]
+        targetSdkVersion globalConfig["targetSdkVersion"]
+        versionCode globalConfig["versionCode"]
+        versionName globalConfig["versionName"]
+
+        testInstrumentationRunner globalConfig["testInstrumentationRunner"]
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+}
+
+dependencies {
+
+    def dependencies = rootProject.ext.dependencies
+    def testDependencies = rootProject.ext.testDependencies
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile(testDependencies.espresso, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile testDependencies.junit
+
+    // android
+    compile dependencies.appcompat_v7
+    compile dependencies.design
+    compile dependencies.card_view
+    // multidex
+    compile dependencies.multidex
+    // timber log
+    compile dependencies.timber
+    // glide
+    compile dependencies.glide
+    compile dependencies.okhttp3_integration
+    // google
+    compile dependencies.gson
+    // dagger2
+    compile dependencies.dagger2
+    // alibaba
+    compile dependencies.fastjson
+    // arouter
+    compile dependencies.arouter_api
+    annotationProcessor dependencies.arouter_compiler
+    // rx java
+    compile dependencies.rxjava
+    compile dependencies.rxandroid
+    // rx preferences
+    compile dependencies.rx_preferences
+    // square
+    compile dependencies.okhttp
+    compile dependencies.okio
+    compile dependencies.retrofit
+    compile dependencies.retrofit2_rxjava2_adapter
+    compile dependencies.converter_gson
+    compile dependencies.http_log
+    // butterknife
+    compile dependencies.butterknife
+    annotationProcessor dependencies.butterknife_compiler
+    // greenrobot
+    compile dependencies.eventbus
+    // sqlcipher
+    compile dependencies.sqlcipher
+    // rx permissions
+    compile dependencies.rx_permissions
+
+}
