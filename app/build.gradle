@@ -1,15 +1,25 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+
+    def globalConfig = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfig["compileSdkVersion"]
+    buildToolsVersion globalConfig["buildToolsVersion"]
     defaultConfig {
         applicationId "com.bingo.bingoframe"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion globalConfig["minSdkVersion"]
+        targetSdkVersion globalConfig["targetSdkVersion"]
+        versionCode globalConfig["versionCode"]
+        versionName globalConfig["versionName"]
+
+        testInstrumentationRunner globalConfig["testInstrumentationRunner"]
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -18,15 +28,33 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        targetCompatibility globalConfig["javaVersion"]
+        sourceCompatibility globalConfig["javaVersion"]
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    def dependencies = rootProject.ext.dependencies
+    def debugDependencies = rootProject.ext.debugDependencies
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:support-v4:26.+'
-    compile 'com.android.support:support-vector-drawable:26.+'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+
+    implementation project(':common')
+
+    // leakcanary
+    debugImplementation debugDependencies.leakcanary
+    releaseImplementation dependencies.leakcanary
+
+    // dagger2
+    annotationProcessor dependencies.dagger2_compiler
+    annotationProcessor dependencies.dagger2_android_processor
+
+    // butterknife
+    annotationProcessor dependencies.butterknife_compiler
 }

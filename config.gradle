@@ -32,7 +32,13 @@ ext {
     leakcanaryVersion = '1.5.4'
     // rx java
     rxandroidVersion = '2.0.1'
-    rxjavaVersion = '2.1.5'
+    rxjavaVersion = '2.1.7'
+    // rx cache
+    rxcacheVersion = "1.8.1-2.x"
+    jolyglotVersion = "0.0.4"
+
+    // rxlifecycle
+    rxlifecycleVersion = '2.2.0'
     // rx preferences
     rxPreferencesVersion = '2.0.0-RC3'
     // master
@@ -70,6 +76,7 @@ ext {
             design : "com.android.support:design:$androidSupportVersion",
             recyclerview : "com.android.support:recyclerview-v7:$androidSupportVersion",
             card_view : "com.android.support:cardview-v7:$androidSupportVersion",
+            annotations : "com.android.support:support-annotations:$androidSupportVersion",
             multidex : "com.android.support:multidex:$multidexVersion",
 
             // google
@@ -84,7 +91,7 @@ ext {
             okhttp : "com.squareup.okhttp3:okhttp:$okhttpVersion",
             okio : "com.squareup.okio:okio:$okioVersion",
             retrofit : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofit2_rxjava2_adapter : "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit2Rxjava2AdapterVersion",
+            retrofit2_rxjava2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofit2Rxjava2AdapterVersion",
             converter_gson : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
             http_log : "com.squareup.okhttp3:logging-interceptor:$logInterceptorVersion",
             leakcanary : "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanaryVersion",
@@ -92,6 +99,15 @@ ext {
             // rx java
             rxandroid : "io.reactivex.rxjava2:rxandroid:$rxandroidVersion",
             rxjava : "io.reactivex.rxjava2:rxjava:$rxjavaVersion",
+
+            // rx cache
+            rxcache : "com.github.VictorAlbertos.RxCache:runtime:$rxcacheVersion",
+            rxcache_jolyglot_gson : "com.github.VictorAlbertos.Jolyglot:gson:$jolyglotVersion",
+
+            // rx lifecycle
+            rxlifecycle : "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycleVersion",
+            rxlifecycle_android : "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycleVersion",
+            rxlifecycle_components : "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycleVersion",
 
             // rx preferences
             rx_preferences : "com.f2prateek.rx.preferences2:rx-preferences:$rxPreferencesVersion",
@@ -120,6 +136,9 @@ ext {
             // dagger2
             dagger2 : "com.google.dagger:dagger:$dagger2Version",
             dagger2_compiler : "com.google.dagger:dagger-compiler:$dagger2Version",
+            dagger2_android : "com.google.dagger:dagger-android:$dagger2Version",
+            dagger2_android_support : "com.google.dagger:dagger-android-support:$dagger2Version",
+            dagger2_android_processor : "com.google.dagger:dagger-android-processor:$dagger2Version",
 
             // bottom tab
             ager_bottom_tab_strip : "me.majiajie:pager-bottom-tab-strip:$agerBottomTabStripVersion",

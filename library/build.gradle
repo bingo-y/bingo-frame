@@ -26,6 +26,11 @@ android {
             shrinkResources false
         }
     }
+
+    compileOptions {
+        targetCompatibility globalConfig["javaVersion"]
+        sourceCompatibility globalConfig["javaVersion"]
+    }
 }
 
 dependencies {
@@ -33,52 +38,68 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
     def testDependencies = rootProject.ext.testDependencies
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile(testDependencies.espresso, {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation(testDependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile testDependencies.junit
+    testImplementation testDependencies.junit
 
     // android
-    compile dependencies.appcompat_v7
-    compile dependencies.design
-    compile dependencies.card_view
+    api dependencies.appcompat_v7
+    api dependencies.design
+    api dependencies.recyclerview
+    api dependencies.card_view
     // multidex
-    compile dependencies.multidex
+    api dependencies.multidex
     // timber log
-    compile dependencies.timber
+    api dependencies.timber
     // glide
-    compile dependencies.glide
-    compile dependencies.okhttp3_integration
+    api dependencies.glide
+    api dependencies.okhttp3_integration
     // google
-    compile dependencies.gson
+    api dependencies.gson
     // dagger2
-    compile dependencies.dagger2
+    api dependencies.dagger2
+    annotationProcessor dependencies.dagger2_compiler
+    api dependencies.dagger2_android
+    api dependencies.dagger2_android_support
+    annotationProcessor dependencies.dagger2_android_processor
+
     // alibaba
-    compile dependencies.fastjson
+    api dependencies.fastjson
     // arouter
-    compile dependencies.arouter_api
+    api dependencies.arouter_api
     annotationProcessor dependencies.arouter_compiler
     // rx java
-    compile dependencies.rxjava
-    compile dependencies.rxandroid
+    api dependencies.rxjava
+    api dependencies.rxandroid
+    // rx cache
+    api dependencies.rxcache
+    api dependencies.rxcache_jolyglot_gson
+
+    // rx lifecycle
+    api dependencies.rxlifecycle
+    api dependencies.rxlifecycle_android
+    api dependencies.rxlifecycle_components
+
     // rx preferences
-    compile dependencies.rx_preferences
+    api dependencies.rx_preferences
+
     // square
-    compile dependencies.okhttp
-    compile dependencies.okio
-    compile dependencies.retrofit
-    compile dependencies.retrofit2_rxjava2_adapter
-    compile dependencies.converter_gson
-    compile dependencies.http_log
+    api dependencies.okhttp
+    api dependencies.okio
+    api dependencies.retrofit
+    api dependencies.retrofit2_rxjava2_adapter
+    api dependencies.converter_gson
+    api dependencies.http_log
     // butterknife
-    compile dependencies.butterknife
+    api dependencies.butterknife
     annotationProcessor dependencies.butterknife_compiler
     // greenrobot
-    compile dependencies.eventbus
+    api dependencies.eventbus
     // sqlcipher
-    compile dependencies.sqlcipher
+    api dependencies.sqlcipher
     // rx permissions
-    compile dependencies.rx_permissions
+    api dependencies.rx_permissions
 
 }
