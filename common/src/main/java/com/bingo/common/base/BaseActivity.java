@@ -91,7 +91,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     @Override
     public boolean useEventBus() {
-        return true;
+        return false;
     }
 
     /**

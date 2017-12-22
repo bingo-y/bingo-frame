@@ -10,6 +10,7 @@ import dagger.Module;
  * @Description
  */
 @Module(includes = {
+        MainActivityModule.class,
         UserActivityModule.class
 })
 public class BingoModule {

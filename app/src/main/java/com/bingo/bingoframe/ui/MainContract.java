@@ -11,23 +11,19 @@ import java.util.List;
 
 /**
  * @author bingo.
- * @date Create on 2017/12/18.
+ * @date Create on 2017/12/22.
  * @Description
  */
 
-public interface UserContract {
+public interface MainContract {
 
     interface View extends IView, PermissionCallback {
-        void onUserSuccess(List<User> users);
-
         RxPermissions getRxPermissions();
 
         Activity getActivity();
     }
 
     interface Presenter extends IPresenter {
-
-        void listUser(boolean update);
 
         /**
          * 外部存储权限
