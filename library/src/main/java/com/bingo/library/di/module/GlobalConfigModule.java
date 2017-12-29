@@ -1,10 +1,12 @@
 package com.bingo.library.di.module;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.bingo.library.data.cache.Cache;
+import com.bingo.library.data.cache.CacheType;
 import com.bingo.library.data.cache.LruCache;
 import com.bingo.library.data.http.BaseUrl;
 import com.bingo.library.data.http.GlobalHttpHandler;
@@ -47,6 +49,7 @@ public class GlobalConfigModule {
     private AppModule.GsonConfiguration mGsonConfiguration;
     private HttpLoggingInterceptor.Level mPrintHttpLogLevel;
     private Cache.Factory mCacheFactory;
+    private DatabaseModule.RoomConfiguration mRoomConfiguration;
     private Executor mExecutor;
 
     private GlobalConfigModule(Builder builder) {
@@ -62,6 +65,7 @@ public class GlobalConfigModule {
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
         this.mCacheFactory = builder.cacheFactory;
+        this.mRoomConfiguration = builder.roomConfiguration;
     }
 
     public static Builder builder() {
@@ -182,6 +186,12 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    DatabaseModule.RoomConfiguration provideRoomConfiguration() {
+        return mRoomConfiguration == null ? DatabaseModule.RoomConfiguration.EMPTY : mRoomConfiguration;
+    }
+
+    @Singleton
+    @Provides
     Executor provideUseCaseExcutor() {
         return mExecutor == null
                 ? ThreadPoolUtils.createThreadPoolExecutor(1, 2,
@@ -203,6 +213,7 @@ public class GlobalConfigModule {
         private AppModule.GsonConfiguration gsonConfiguration;
         private HttpLoggingInterceptor.Level printHttpLogLevel;
         private Cache.Factory cacheFactory;
+        private DatabaseModule.RoomConfiguration roomConfiguration;
         private Executor executor;
 
         private Builder() {
@@ -284,6 +295,11 @@ public class GlobalConfigModule {
 
         public Builder cacheFactory(Cache.Factory cacheFactory) {
             this.cacheFactory = cacheFactory;
+            return this;
+        }
+
+        public Builder roomConfiguration(DatabaseModule.RoomConfiguration roomConfiguration) {
+            this.roomConfiguration = roomConfiguration;
             return this;
         }
 

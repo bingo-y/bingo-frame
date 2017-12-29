@@ -1,5 +1,6 @@
 package com.bingo.library.data;
 
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 /**
@@ -27,6 +28,16 @@ public interface IRepositoryManager {
      * @return
      */
     <T> T obtainCacheService(Class<T> cache);
+
+    /**
+     * 根据传入的 Class 获取对应的 RoomDatabase
+     *
+     * @param database RoomDatabase Class
+     * @param <DB>     RoomDatabase
+     * @param dbName   RoomDatabase name
+     * @return RoomDatabase
+     */
+    <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName);
 
     /**
      * 清理所有缓存

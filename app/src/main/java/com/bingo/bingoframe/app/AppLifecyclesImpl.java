@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.bingo.bingoframe.BuildConfig;
+import com.bingo.bingoframe.domain.db.AppDatabase;
 import com.bingo.library.base.delegate.AppLifecycles;
 import com.bingo.library.support.utils.ArmsUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -52,6 +53,10 @@ public class AppLifecyclesImpl implements AppLifecycles {
         }
         //leakCanary内存泄露检查
         ArmsUtils.INSTANCE.obtainArmsComponent(application).extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED);
+
+        // init db
+        ArmsUtils.INSTANCE.obtainArmsComponent(application).repositoryManager().obtainRoomDatabase(AppDatabase.class, AppDatabase.DB_NAME);
+
     }
 
     @Override

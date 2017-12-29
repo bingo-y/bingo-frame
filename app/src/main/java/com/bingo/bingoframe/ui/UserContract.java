@@ -2,6 +2,7 @@ package com.bingo.bingoframe.ui;
 
 import android.app.Activity;
 
+import com.bingo.bingoframe.domain.db.entity.Book;
 import com.bingo.bingoframe.domain.model.User;
 import com.bingo.library.mvp.IPresenter;
 import com.bingo.library.mvp.IView;
@@ -20,6 +21,14 @@ public interface UserContract {
     interface View extends IView, PermissionCallback {
         void onUserSuccess(List<User> users);
 
+        void onLocalUserSuccess(List<User> users);
+
+        void onInsertSuccess(Integer id);
+
+        void onBooksSuccess(List<Book> books);
+
+        void onMessage(String message);
+
         RxPermissions getRxPermissions();
 
         Activity getActivity();
@@ -28,6 +37,16 @@ public interface UserContract {
     interface Presenter extends IPresenter {
 
         void listUser(boolean update);
+
+        void listLocalUsers();
+
+        void deleteUser(int id);
+
+        void insertUser(User user);
+
+        void insertBooks(List<Book> books);
+
+        void selectBooks(String name);
 
         /**
          * 外部存储权限

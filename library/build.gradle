@@ -49,6 +49,12 @@ dependencies {
     api dependencies.design
     api dependencies.recyclerview
     api dependencies.card_view
+
+    // arch
+    api dependencies.lifecycle_java8
+    api dependencies.room_runtime
+    api dependencies.room_rxjava2
+
     // multidex
     api dependencies.multidex
     // timber log

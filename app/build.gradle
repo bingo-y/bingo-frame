@@ -17,7 +17,8 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [ moduleName : project.getName(),
+                              "room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
         vectorDrawables.useSupportLibrary = true
@@ -29,6 +30,10 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+
     compileOptions {
         targetCompatibility globalConfig["javaVersion"]
         sourceCompatibility globalConfig["javaVersion"]
@@ -38,6 +43,7 @@ android {
 dependencies {
     def dependencies = rootProject.ext.dependencies
     def debugDependencies = rootProject.ext.debugDependencies
+    def testDependencies = rootProject.ext.testDependencies
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -46,6 +52,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation project(':common')
+
+    // room
+    annotationProcessor dependencies.room_compiler
 
     // leakcanary
     debugImplementation debugDependencies.leakcanary
@@ -57,4 +66,7 @@ dependencies {
 
     // butterknife
     annotationProcessor dependencies.butterknife_compiler
+
+    // room test
+    testImplementation testDependencies.room_testing
 }

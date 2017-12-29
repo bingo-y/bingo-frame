@@ -37,6 +37,9 @@ ext {
     rxcacheVersion = "1.8.1-2.x"
     jolyglotVersion = "0.0.4"
 
+    // Arch
+    androidArchSdkVersion = "1.0.0"
+
     // rxlifecycle
     rxlifecycleVersion = '2.2.0'
     // rx preferences
@@ -65,7 +68,6 @@ ext {
     // BGABanner
     bgaBannerVersion = "2.1.7"
 
-
     // Test
     junitVersion = '4.12'
     espressoVersion = '2.2.2'
@@ -78,6 +80,12 @@ ext {
             card_view : "com.android.support:cardview-v7:$androidSupportVersion",
             annotations : "com.android.support:support-annotations:$androidSupportVersion",
             multidex : "com.android.support:multidex:$multidexVersion",
+
+            // Arch
+            lifecycle_java8 : "android.arch.lifecycle:common-java8:${androidArchSdkVersion}",
+            room_runtime : "android.arch.persistence.room:runtime:${androidArchSdkVersion}",
+            room_compiler : "android.arch.persistence.room:compiler:${androidArchSdkVersion}",
+            room_rxjava2 : "android.arch.persistence.room:rxjava2:${androidArchSdkVersion}",
 
             // google
             gson : "com.google.code.gson:gson:$gsonVersion",
@@ -156,6 +164,8 @@ ext {
 
     testDependencies = [
             junit : "junit:junit:$junitVersion",
-            espresso : "com.android.support.test.espresso:espresso-core:$espressoVersion"
+            espresso : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            // room
+            room_testing : "android.arch.persistence.room:testing:${androidArchSdkVersion}",
     ]
 }

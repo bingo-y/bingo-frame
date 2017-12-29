@@ -1,10 +1,13 @@
 package com.bingo.library.data;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.bingo.library.data.cache.Cache;
 import com.bingo.library.data.cache.CacheType;
+import com.bingo.library.di.module.DatabaseModule;
 import com.bingo.library.support.utils.Preconditions;
 
 import javax.inject.Inject;
@@ -28,15 +31,19 @@ public class RepositoryManager implements IRepositoryManager {
     private Application mApplication;
     private Cache<String, Object> mRetrofitServiceCache;
     private Cache<String, Object> mCacheServiceCache;
+    private Cache<String, Object> mRoomDatabaseCache;
     private Cache.Factory mCachefactory;
+    private DatabaseModule.RoomConfiguration mRoomConfiguration;
 
     @Inject
     public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
-                             Application application, Cache.Factory cachefactory) {
+                             Application application, Cache.Factory cachefactory,
+                             DatabaseModule.RoomConfiguration roomConfiguration) {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
         this.mApplication = application;
         this.mCachefactory = cachefactory;
+        this.mRoomConfiguration = roomConfiguration;
     }
 
     /**
@@ -85,6 +92,29 @@ public class RepositoryManager implements IRepositoryManager {
             }
         }
         return cacheService;
+    }
+
+    @Override
+    public <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName) {
+        if (mRoomDatabaseCache == null) {
+            mRoomDatabaseCache = mCachefactory.build(CacheType.DATABASE_SERVICE_CACHE);
+        }
+        Preconditions.checkNotNull(mRoomDatabaseCache,"Cannot return null from a Cache.Factory#build(int) method");
+        DB roomDatabase;
+        synchronized (mRoomDatabaseCache) {
+            roomDatabase = (DB) mRoomDatabaseCache.get(database.getCanonicalName());
+            if (roomDatabase == null) {
+                RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
+                //自定义 Room 配置
+                if (mRoomConfiguration != null) {
+                    mRoomConfiguration.configRoom(mApplication, builder);
+                }
+                roomDatabase = (DB) builder.build();
+                mRoomDatabaseCache.put(database.getCanonicalName(), roomDatabase);
+            }
+        }
+
+        return roomDatabase;
     }
 
     /**

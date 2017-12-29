@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import com.bingo.library.data.RepositoryManager;
+import com.bingo.library.di.component.AppComponent;
 
 /**
  * @author bingo.
@@ -19,9 +20,11 @@ import com.bingo.library.data.RepositoryManager;
 public interface CacheType {
     int RETROFIT_SERVICE_CACHE_TYPE_ID = 0;
     int CACHE_SERVICE_CACHE_TYPE_ID = 1;
-    int EXTRAS_TYPE_ID = 2;
-    int ACTIVITY_CACHE_TYPE_ID = 3;
-    int FRAGMENT_CACHE_TYPE_ID = 4;
+    int DATABASE_SERVICE_CACHE_TYPE_ID = 2;
+    int EXTRAS_TYPE_ID = 3;
+    int ACTIVITY_CACHE_TYPE_ID = 4;
+    int FRAGMENT_CACHE_TYPE_ID = 5;
+
     /**
      * {@link RepositoryManager}中存储 Retrofit Service 的容器
      */
@@ -55,6 +58,29 @@ public interface CacheType {
         @Override
         public int getCacheTypeId() {
             return CACHE_SERVICE_CACHE_TYPE_ID;
+        }
+
+        @Override
+        public int calculateCacheSize(Context context) {
+            ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            int targetMemoryCacheSize = (int) (activityManager.getMemoryClass() * MAX_SIZE_MULTIPLIER * 1024);
+            if (targetMemoryCacheSize >= MAX_SIZE) {
+                return MAX_SIZE;
+            }
+            return targetMemoryCacheSize;
+        }
+    };
+
+    /**
+     * {@link RepositoryManager} 中储存 Database Service 的容器
+     */
+    CacheType DATABASE_SERVICE_CACHE = new CacheType() {
+        private static final int MAX_SIZE = 150;
+        private static final float MAX_SIZE_MULTIPLIER = 0.002f;
+
+        @Override
+        public int getCacheTypeId() {
+            return DATABASE_SERVICE_CACHE_TYPE_ID;
         }
 
         @Override
