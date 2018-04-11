@@ -34,7 +34,9 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
 
+
     @Inject
+    @Nullable
     protected P mPresenter;
 
     @NonNull
@@ -56,7 +58,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             return initView(inflater, container, savedInstanceState);
     }
 

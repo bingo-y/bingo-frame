@@ -35,6 +35,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private Unbinder mUnbinder;
 
     @Inject
+    @Nullable
     protected P mPresenter;
 
     @NonNull

@@ -2,6 +2,8 @@ package com.bingo.library.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * @author bingo.
@@ -13,7 +15,7 @@ public interface IActivityDelegate {
 
     String ACTIVITY_DELEGATE = "activity_delegate";
 
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@Nullable Bundle savedInstanceState);
 
     void onStart();
 
@@ -23,7 +25,7 @@ public interface IActivityDelegate {
 
     void onStop();
 
-    void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(@NonNull Bundle outState);
 
     void onDestroy();
 

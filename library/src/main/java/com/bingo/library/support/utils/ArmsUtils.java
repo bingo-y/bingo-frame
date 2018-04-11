@@ -27,6 +27,7 @@ public enum ArmsUtils {
      * @return ArmsComponent
      */
     public AppComponent obtainArmsComponent(Context context) {
+        Preconditions.checkNotNull(context, "%s cannot be null", Context.class.getName());
         return obtainArmsComponent((Application) context.getApplicationContext());
     }
 
@@ -40,5 +41,4 @@ public enum ArmsUtils {
         Preconditions.checkState(application instanceof App, "Application does not implements IArms");
         return ((App) application).getAppComponent();
     }
-
 }

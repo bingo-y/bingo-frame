@@ -2,6 +2,8 @@ package com.bingo.library.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -27,19 +29,19 @@ public class FragmentDelegate implements IFragmentDelegate {
     private Unbinder mUnbinder;
 
 
-    public FragmentDelegate(FragmentManager fragmentManager, Fragment fragment) {
+    public FragmentDelegate(@NonNull FragmentManager fragmentManager, Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;
         this.iFragment = (IFragment) fragment;
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         if (iFragment.useEventBus()) {
             //如果要使用eventbus请将此方法返回true
             //注册到事件主线
@@ -52,7 +54,7 @@ public class FragmentDelegate implements IFragmentDelegate {
     }
 
     @Override
-    public void onCreateView(View view, Bundle savedInstanceState) {
+    public void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState) {
         //绑定到butterknife
         if (view != null) {
             mUnbinder = ButterKnife.bind(mFragment, view);
@@ -60,7 +62,7 @@ public class FragmentDelegate implements IFragmentDelegate {
     }
 
     @Override
-    public void onActivityCreate(Bundle savedInstanceState) {
+    public void onActivityCreate(@Nullable Bundle savedInstanceState) {
         iFragment.initData(savedInstanceState);
     }
 
@@ -85,13 +87,13 @@ public class FragmentDelegate implements IFragmentDelegate {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
     }
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null) {
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
             try {
                 mUnbinder.unbind();
             } catch (IllegalStateException e) {

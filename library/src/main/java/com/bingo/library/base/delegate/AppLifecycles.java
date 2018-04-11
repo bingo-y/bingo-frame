@@ -2,6 +2,7 @@ package com.bingo.library.base.delegate;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 /**
  * @author bingo.
@@ -11,10 +12,10 @@ import android.content.Context;
 
 public interface AppLifecycles {
 
-    void attachBaseContext(Context base);
+    void attachBaseContext(@NonNull Context base);
 
-    void onCreate(Application application);
+    void onCreate(@NonNull Application application);
 
-    void onTerminate(Application application);
+    void onTerminate(@NonNull Application application);
 
 }

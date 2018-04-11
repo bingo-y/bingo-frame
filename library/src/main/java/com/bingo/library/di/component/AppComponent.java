@@ -14,6 +14,7 @@ import java.io.File;
 
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 import okhttp3.OkHttpClient;
 
@@ -68,4 +69,11 @@ public interface AppComponent {
     Cache.Factory cacheFactory();
 
     void inject(AppDelegate delegate);
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance Builder application(Application application);
+        Builder globalConfigModule(GlobalConfigModule globalConfigModule);
+        AppComponent build();
+    }
 }

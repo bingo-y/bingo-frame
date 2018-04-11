@@ -2,6 +2,8 @@ package com.bingo.library.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -12,16 +14,15 @@ import android.view.View;
  */
 
 public interface IFragmentDelegate {
-
     String FRAGMENT_DELEGATE = "fragment_delegate";
 
-    void onAttach(Context context);
+    void onAttach(@NonNull Context context);
 
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@Nullable Bundle savedInstanceState);
 
-    void onCreateView(View view, Bundle savedInstanceState);
+    void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState);
 
-    void onActivityCreate(Bundle savedInstanceState);
+    void onActivityCreate(@Nullable Bundle savedInstanceState);
 
     void onStart();
 
@@ -31,7 +32,7 @@ public interface IFragmentDelegate {
 
     void onStop();
 
-    void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(@NonNull Bundle outState);
 
     void onDestroyView();
 

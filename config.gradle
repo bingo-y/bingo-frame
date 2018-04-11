@@ -1,8 +1,8 @@
 
 ext {
     // android
-    compileSdkVersion = 26
-    buildToolsVersion = "26.0.2"
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.3"
     minSdkVersion = 15
     targetSdkVersion = 26
     versionCode = 1
@@ -15,7 +15,7 @@ ext {
 
     // Libraries
     // android
-    androidSupportVersion = '26.1.0'
+    androidSupportVersion = '27.1.0'
     multidexVersion = '1.0.1'
     // google
     gsonVersion = '2.8.2'

@@ -2,6 +2,8 @@ package com.bingo.library.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,7 +29,7 @@ public class ActivityDelegate implements IActivityDelegate, HasSupportFragmentIn
     @Inject
     DispatchingAndroidInjector<Fragment> mFragmentInjector;
 
-    public ActivityDelegate(Activity activity) {
+    public ActivityDelegate(@Nullable Activity activity) {
         this.mActivity = activity;
         this.iActivity = (IActivity) activity;
     }
@@ -66,7 +68,7 @@ public class ActivityDelegate implements IActivityDelegate, HasSupportFragmentIn
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
     }
 

@@ -13,6 +13,9 @@ import com.bingo.library.base.delegate.IFragmentDelegate;
 import com.bingo.library.data.cache.Cache;
 import com.bingo.library.support.utils.Preconditions;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import timber.log.Timber;
 
 /**
@@ -21,8 +24,12 @@ import timber.log.Timber;
  * @Description {@link FragmentManager.FragmentLifecycleCallbacks} 默认实现类
  * 通过 {@link IFragmentDelegate} 管理 {@link Fragment}
  */
-
+@Singleton
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
+
+    @Inject
+    public FragmentLifecycle() {
+    }
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {

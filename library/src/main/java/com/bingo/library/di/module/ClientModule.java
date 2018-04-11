@@ -50,7 +50,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application,
+    static Retrofit provideRetrofit(Application application,
                              @Nullable RetrofitConfiguration configuration,
                              Retrofit.Builder builder,
                              OkHttpClient client,
@@ -78,7 +78,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
+    static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
             , @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler) {
         builder
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -105,21 +105,21 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    Retrofit.Builder provideRetrofitBuilder() {
+    static Retrofit.Builder provideRetrofitBuilder() {
         return new Retrofit.Builder();
     }
 
 
     @Singleton
     @Provides
-    OkHttpClient.Builder provideClientBuilder() {
+    static OkHttpClient.Builder provideClientBuilder() {
         return new OkHttpClient.Builder();
     }
 
 
     @Singleton
     @Provides
-    Interceptor provideLoggingInterceptor(HttpLoggingInterceptor.Level level) {
+    static Interceptor provideLoggingInterceptor(HttpLoggingInterceptor.Level level) {
         // 打印请求信息的拦截器
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         if (level == null) {
@@ -139,7 +139,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+    static RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
         RxCache rxCache = null;
         if (configuration != null) {
@@ -161,7 +161,7 @@ public class ClientModule {
     @Singleton
     @Provides
     @Named("RxCacheDirectory")
-    File provideRxCacheDirectory(Application context) {
+    static File provideRxCacheDirectory(Application context) {
         try {
             return FileUtils.getAppFileInExt(context, FileUtils.AppDirTypeInExt.RXCACHE);
         } catch (FileUtils.NotFoundExternalSD notFoundExternalSD) {

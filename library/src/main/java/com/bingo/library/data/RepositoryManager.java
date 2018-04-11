@@ -26,24 +26,24 @@ import retrofit2.Retrofit;
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
 
-    private Lazy<Retrofit> mRetrofit;
-    private Lazy<RxCache> mRxCache;
-    private Application mApplication;
+    @Inject
+    Lazy<Retrofit> mRetrofit;
+    @Inject
+    Lazy<RxCache> mRxCache;
+    @Inject
+    Application mApplication;
+    @Inject
+    Cache.Factory mCachefactory;
+    @Inject
+    DatabaseModule.RoomConfiguration mRoomConfiguration;
+
     private Cache<String, Object> mRetrofitServiceCache;
     private Cache<String, Object> mCacheServiceCache;
     private Cache<String, Object> mRoomDatabaseCache;
-    private Cache.Factory mCachefactory;
-    private DatabaseModule.RoomConfiguration mRoomConfiguration;
+
 
     @Inject
-    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
-                             Application application, Cache.Factory cachefactory,
-                             DatabaseModule.RoomConfiguration roomConfiguration) {
-        this.mRetrofit = retrofit;
-        this.mRxCache = rxCache;
-        this.mApplication = application;
-        this.mCachefactory = cachefactory;
-        this.mRoomConfiguration = roomConfiguration;
+    public RepositoryManager() {
     }
 
     /**
@@ -58,14 +58,11 @@ public class RepositoryManager implements IRepositoryManager {
         if (mRetrofitServiceCache == null) {
             mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
         }
-        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T retrofitService;
-        synchronized (mRetrofitServiceCache) {
-            retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
-            if (retrofitService == null) {
-                retrofitService = mRetrofit.get().create(service);
-                mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
-            }
+        Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
+        if (retrofitService == null) {
+            retrofitService = mRetrofit.get().create(service);
+            mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
         }
         return retrofitService;
     }
@@ -83,13 +80,10 @@ public class RepositoryManager implements IRepositoryManager {
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
         }
         Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T cacheService;
-        synchronized (mCacheServiceCache) {
-            cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
-            if (cacheService == null) {
-                cacheService = mRxCache.get().using(cache);
-                mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
-            }
+        T cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
+        if (cacheService == null) {
+            cacheService = mRxCache.get().using(cache);
+            mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
         }
         return cacheService;
     }
@@ -100,20 +94,16 @@ public class RepositoryManager implements IRepositoryManager {
             mRoomDatabaseCache = mCachefactory.build(CacheType.DATABASE_SERVICE_CACHE);
         }
         Preconditions.checkNotNull(mRoomDatabaseCache,"Cannot return null from a Cache.Factory#build(int) method");
-        DB roomDatabase;
-        synchronized (mRoomDatabaseCache) {
-            roomDatabase = (DB) mRoomDatabaseCache.get(database.getCanonicalName());
-            if (roomDatabase == null) {
-                RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
-                //自定义 Room 配置
-                if (mRoomConfiguration != null) {
-                    mRoomConfiguration.configRoom(mApplication, builder);
-                }
-                roomDatabase = (DB) builder.build();
-                mRoomDatabaseCache.put(database.getCanonicalName(), roomDatabase);
+        DB roomDatabase = (DB) mRoomDatabaseCache.get(database.getCanonicalName());
+        if (roomDatabase == null) {
+            RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
+            //自定义 Room 配置
+            if (mRoomConfiguration != null) {
+                mRoomConfiguration.configRoom(mApplication, builder);
             }
+            roomDatabase = (DB) builder.build();
+            mRoomDatabaseCache.put(database.getCanonicalName(), roomDatabase);
         }
-
         return roomDatabase;
     }
 

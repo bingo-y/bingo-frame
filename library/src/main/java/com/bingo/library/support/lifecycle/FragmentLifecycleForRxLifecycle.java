@@ -9,6 +9,9 @@ import android.view.View;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.subjects.Subject;
 
 /**
@@ -16,8 +19,12 @@ import io.reactivex.subjects.Subject;
  * @date Create on 2017/11/2.
  * @Description 配合 {@link FragmentLifecycleable} 使用,使 {@link Fragment} 具有 {@link RxLifecycle} 的特性
  */
-
+@Singleton
 public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
+
+    @Inject
+    public FragmentLifecycleForRxLifecycle() {
+    }
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
