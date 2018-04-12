@@ -13,7 +13,7 @@ import com.bingo.bingoframe.domain.db.entity.UserEntity;
  * @date Create on 2017/12/28.
  * @Description
  */
-@Database(version = 1, entities = {UserEntity.class, Book.class})
+@Database(version = 2, entities = {UserEntity.class, Book.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "bingo_frame";

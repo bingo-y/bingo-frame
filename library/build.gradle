@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
+apply from : '../kotlin.gradle'
 
 android {
-    def globalConfig = rootProject.extensions.getByName("ext")
+    def globalConfig = rootProject.ext.android
     compileSdkVersion globalConfig["compileSdkVersion"]
     buildToolsVersion globalConfig["buildToolsVersion"]
 
@@ -12,12 +13,6 @@ android {
         versionName globalConfig["versionName"]
 
         testInstrumentationRunner globalConfig["testInstrumentationRunner"]
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
-            }
-        }
 
     }
     buildTypes {
@@ -66,16 +61,16 @@ dependencies {
     api dependencies.gson
     // dagger2
     api dependencies.dagger2
-    annotationProcessor dependencies.dagger2_compiler
+    kapt dependencies.dagger2_compiler
     api dependencies.dagger2_android
     api dependencies.dagger2_android_support
-    annotationProcessor dependencies.dagger2_android_processor
+    kapt dependencies.dagger2_android_processor
 
     // alibaba
     api dependencies.fastjson
     // arouter
     api dependencies.arouter_api
-    annotationProcessor dependencies.arouter_compiler
+    kapt dependencies.arouter_compiler
     // rx java
     api dependencies.rxjava
     api dependencies.rxandroid
@@ -100,7 +95,7 @@ dependencies {
     api dependencies.http_log
     // butterknife
     api dependencies.butterknife
-    annotationProcessor dependencies.butterknife_compiler
+    kapt dependencies.butterknife_compiler
     // greenrobot
     api dependencies.eventbus
     // sqlcipher
@@ -108,4 +103,5 @@ dependencies {
     // rx permissions
     api dependencies.rx_permissions
 
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

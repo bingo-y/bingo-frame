@@ -20,10 +20,6 @@ public interface IView {
      */
     void endLoading();
 
-    /**
-     * 跳转 {@link Activity}
-     */
-    void launchActivity(Intent intent);
 
     /**
      * 杀死自己

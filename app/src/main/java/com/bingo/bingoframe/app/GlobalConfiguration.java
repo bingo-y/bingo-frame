@@ -1,8 +1,12 @@
 package com.bingo.bingoframe.app;
 
 import android.app.Application;
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -11,6 +15,7 @@ import com.bingo.bingoframe.domain.http.Api;
 import com.bingo.library.base.ConfigModule;
 import com.bingo.library.base.delegate.AppLifecycles;
 import com.bingo.library.data.http.GlobalHttpHandler;
+import com.bingo.library.di.module.DatabaseModule;
 import com.bingo.library.di.module.GlobalConfigModule;
 import com.bingo.library.support.utils.ArmsUtils;
 import com.squareup.leakcanary.RefWatcher;
@@ -60,6 +65,8 @@ public class GlobalConfiguration implements ConfigModule {
                     // 想自定义 RxCache 的缓存文件夹或者解析方式, 如改成 fastjson, 请 return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());
                     // 否则请 return null;
                     return null;
+                }).roomConfiguration((context15, builder1) -> {
+                    builder1.addMigrations(MIGRATION_1_2);
                 });
 
     }
@@ -103,4 +110,11 @@ public class GlobalConfiguration implements ConfigModule {
             }
         });
     }
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+        }
+    };
 }

@@ -20,7 +20,7 @@ import static android.arch.persistence.room.ForeignKey.NO_ACTION;
         entity = UserEntity.class,
         parentColumns = "id",
         childColumns = "user_id",
-        onDelete = NO_ACTION))
+        onDelete = CASCADE))
 public class Book {
 
     @PrimaryKey(autoGenerate = true)

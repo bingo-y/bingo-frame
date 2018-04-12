@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
 
-    def globalConfig = rootProject.extensions.getByName("ext")
+    def globalConfig = rootProject.ext.android
     compileSdkVersion globalConfig["compileSdkVersion"]
 
     defaultConfig {
