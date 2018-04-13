@@ -33,7 +33,6 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
     def testDependencies = rootProject.ext.testDependencies
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation(testDependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -108,3 +107,5 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
+
+apply from : 'maven.gradle'

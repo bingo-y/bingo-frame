@@ -22,6 +22,10 @@ buildscript {
 allprojects {
     repositories {
         google()
+        //配置maven私服
+        maven {
+            url "http://172.16.33.211:8081/repository/maven-public"
+        }
         maven {
             url "https://jitpack.io"
         }

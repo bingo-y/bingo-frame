@@ -40,6 +40,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation testDependencies.junit
 
-    api project(':library')
-
+    api dependencies.bingo_fw
 }
