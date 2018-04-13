@@ -103,5 +103,8 @@ dependencies {
     // rx permissions
     api dependencies.rx_permissions
 
+    // cc
+    api dependencies.cc
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

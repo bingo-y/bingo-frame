@@ -19,10 +19,4 @@ public interface IView {
      * 结束加载
      */
     void endLoading();
-
-
-    /**
-     * 杀死自己
-     */
-    void killMyself();
 }

@@ -127,11 +127,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
-    public void killMyself() {
-
-    }
-
-    @Override
     public void onUserSuccess(List<User> users) {
         StringBuilder sb = new StringBuilder();
         for (User user : users) {

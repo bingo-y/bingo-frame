@@ -74,6 +74,9 @@ ext {
             // BGABanner
             bgaBannerVersion : "2.1.7",
 
+            // cc
+            ccVersion : "0.5.0",
+
             // Test
             junitVersion : "4.12",
             espressoVersion : "2.2.2"
@@ -164,6 +167,8 @@ ext {
 
             // BGABanner
             bag_banner : "cn.bingoogolapple:bga-banner:${version['bgaBannerVersion']}",
+
+            cc : "com.billy.android:cc:${version['ccVersion']}",
     ]
 
     debugDependencies = [
