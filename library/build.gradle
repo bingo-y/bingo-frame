@@ -108,4 +108,5 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
-apply from : 'maven.gradle'
+// apply from : 'maven.gradle'
+apply from: 'bintray.gradle'

@@ -4,6 +4,14 @@ apply plugin: 'maven'
 version = VERSION_NAME
 group = GROUP
 
+Properties properties = new Properties()
+boolean isHasFile = false
+if (project.rootProject.findProject('local.properties') != null){
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+
 def isReleaseBuild() {
     return !VERSION_NAME.contains("SNAPSHOT")
 }
@@ -19,11 +27,11 @@ def getSnapshotRepositoryUrl() {
 }
 
 def getRepositoryUsername() {
-    return hasProperty('MAVEN_USERNAME') ? MAVEN_USERNAME : ""
+    return isHasFile ? properties.getProperty("maven.username") : ""
 }
 
 def getRepositoryPassword() {
-    return hasProperty('MAVEN_PASSWORD') ? MAVEN_PASSWORD : ""
+    return isHasFile ? properties.getProperty("maven.password") : ""
 }
 
 afterEvaluate { project ->
