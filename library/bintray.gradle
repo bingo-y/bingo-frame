@@ -21,7 +21,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'bingo-fw'
+        name = 'bingo-frame'
         licenses = ["Apache-2.0"]
         websiteUrl = siteUrl
         vcsUrl = gitUrl
