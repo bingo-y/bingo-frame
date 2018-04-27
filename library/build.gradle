@@ -26,6 +26,10 @@ android {
         targetCompatibility globalConfig["javaVersion"]
         sourceCompatibility globalConfig["javaVersion"]
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -109,4 +113,4 @@ dependencies {
 }
 
 // apply from : 'maven.gradle'
-apply from: 'bintray.gradle'
+apply from: './bintray.gradle'

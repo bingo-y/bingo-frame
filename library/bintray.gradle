@@ -1,67 +1,49 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-Properties properties = new Properties()
-boolean isHasFile = false
-if (project.rootProject.findProject('local.properties') != null){
-    isHasFile = true
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
 
 def gitUrl = 'https://github.com/bingo-y/bingo-frame.git'   // Git仓库的url
 def siteUrl = 'https://github.com/bingo-y/bingo-frame'   // 项目的主页
 
-version = rootProject.ext.android["versionName"]
+version = "0.1.0"
 group = "com.bingo.library"
+def module_name = 'library'	// 项目的名称
 
-
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
-    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray_user")
-    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray_apikey")
-
+    // 读取配置文件中的用户名和key
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
     pkg {
-        repo = 'maven'
-        name = 'bingo-frame'
-        licenses = ["Apache-2.0"]
+        repo = "maven"
+        name = module_name               // 在jcenter中的项目名称
         websiteUrl = siteUrl
         vcsUrl = gitUrl
-        publish = true // 是否是公开项目。
-
-        version {
-            name = rootProject.ext.android["versionName"]
-            desc = 'a new android framework.'
-            released = new Date()
-            vcsTag = 'v' + rootProject.ext.android["versionName"]
-            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
-        }
+        licenses = ["Apache-2.0"]
+        publish = true
     }
-    configurations = ['archives']
 }
-
-
-
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom {
             project {
                 packaging 'aar'
-                // Add your description here
-                name 'bingo-fw'
-                description 'a new android framework.'
+                name 'bingo-frame' // 名称
                 url siteUrl
-                // Set your license
                 licenses {
                     license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name 'The Apache Software License, Version 2.0' // 开源协议名称
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt' // 协议地址
                     }
                 }
                 developers {
                     developer {
-                        id 'bingoy'        //填写bintray或者github的用户名
-                        name 'bingo'         //姓名，可以是中文
-                        email 'bingo90214@gmail.com'
+                        id 'bingoy'	// 账号
+                        name 'bingoy'	// 名称
+                        email 'bingo90214@gmail.com' // 邮箱地址
                     }
                 }
                 scm {
@@ -73,13 +55,11 @@ install {
         }
     }
 }
-
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 task javadoc(type: Javadoc) {
-    failOnError false
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
@@ -88,6 +68,5 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 artifacts {
-    archives javadocJar
     archives sourcesJar
 }
