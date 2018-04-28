@@ -16,7 +16,7 @@ ext {
 
     version = [
             // local component
-            bingoFWVersion : "1.0.0",
+            bingoFWVersion : "0.1.0",
 
             // android
             androidSupportVersion : "27.1.0",
@@ -87,7 +87,7 @@ ext {
 
     dependencies = [
             // local component
-            bingo_fw : "com.bingo.library:bingo-fw:${version['bingoFWVersion']}",
+            bingo_fw : "com.bingo.library:library:${version['bingoFWVersion']}",
 
             // android
             appcompat_v7 : "com.android.support:appcompat-v7:${version['androidSupportVersion']}",
