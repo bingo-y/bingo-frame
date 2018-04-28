@@ -20,6 +20,7 @@ ext {
 
             // android
             androidSupportVersion : "27.1.0",
+            constraintLayoutVersion : "1.1.0",
             multidexVersion : "1.0.1",
 
             // google
@@ -96,6 +97,7 @@ ext {
             card_view : "com.android.support:cardview-v7:${version['androidSupportVersion']}",
             annotations : "com.android.support:support-annotations:${version['androidSupportVersion']}",
             multidex : "com.android.support:multidex:${version['multidexVersion']}",
+            constraint_layout : "com.android.support.constraint:constraint-layout:${version['constraintLayoutVersion']}",
 
             // Arch
             lifecycle_java8 : "android.arch.lifecycle:common-java8:${version['androidArchSdkVersion']}",

@@ -47,6 +47,7 @@ dependencies {
     api dependencies.design
     api dependencies.recyclerview
     api dependencies.card_view
+    api dependencies.constraint_layout
 
     // arch
     api dependencies.lifecycle_java8

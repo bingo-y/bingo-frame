@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 def gitUrl = 'https://github.com/bingo-y/bingo-frame.git'   // Git仓库的url
 def siteUrl = 'https://github.com/bingo-y/bingo-frame'   // 项目的主页
 
-version = "0.2.0"
+version = "0.3.0"
 group = "com.bingo.library"
 def module_name = 'bingo-frame'	// 项目的名称
 
